@@ -1,19 +1,49 @@
-class Solution {
+class Solution{
 public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        int lb = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
-        int ub = upper_bound(nums.begin(), nums.end(), target) - nums.begin();
+    vector<int> searchRange(vector<int> &nums, int target) {
+        int n = nums.size();
 
-        // Target does not exist
-        if(lb == ub) {
-            return {-1, -1};
+//     ------------- FIRST APPEARANCE ------------------
+
+        int first = -1;
+        int low = 0;
+        int high = n-1;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(nums[mid] == target){
+                first = mid;
+                high = mid-1;     // look more left 
+            }
+            else if(nums[mid]>target){    
+                high = mid-1;
+            }
+            else{
+                low = mid +1;
+            }
         }
 
-        // First occurrence = lb
-        // Last occurrence = ub - 1
+        // ---------------- LAST APPERANCE --------------
 
-        else{
-             return {lb, ub - 1};
+        int last = -1;
+        low = 0;
+        high = n-1;
+        
+        while(low<=high){
+           int mid = low+(high-low)/2;
+            if(nums[mid] == target){
+                last = mid;
+                low = mid+1;   // look more right
+            }
+            else if(nums[mid]>target){    
+                high = mid-1;
+            }
+            else{
+                low = mid +1;
+            }
+            
         }
+        return{first,last};
+
+        
     }
 };
