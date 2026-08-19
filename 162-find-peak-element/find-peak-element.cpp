@@ -25,16 +25,14 @@ public:
                 return mid;
             }
 
-            // We are going uphill,
-            // so a peak is guaranteed on the right
-            else if (nums[mid] < nums[mid + 1]) {
-                low = mid + 1;
+            
+            else if (nums[mid] < nums[mid - 1]) {
+                high = mid - 1;
             }
 
-            // We are going downhill,
-            // so a peak is guaranteed on the left
-            else {
-                high = mid - 1;
+            
+            else if(nums[mid]<nums[mid+1]) {
+                low = mid + 1;
             }
         }
 
