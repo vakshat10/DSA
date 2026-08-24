@@ -22,7 +22,7 @@ public:
         // Binary search on capacity
         while(low <= high) {
 
-            int mid = low + (high - low) / 2;
+            int mid = low + (high - low) / 2;  // mid is capacity
 
             int currentwt = 0;
             int dayneeded = 1;
