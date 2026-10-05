@@ -1,1 +1,1 @@
-<h2>add-two-numbers Notes</h2><hr>[ Time taken: 1hr 1m 52s ]
+<h2>add-two-numbers Notes</h2><hr>[ Time taken: 5m 10s ]
