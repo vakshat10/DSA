@@ -15,25 +15,19 @@ public:
         if (head == nullptr || head->next == nullptr)
             return nullptr;
 
-        int length = 0;
-        ListNode* temp = head;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = nullptr;
 
-        while (temp != nullptr) {
-            length++;
-            temp = temp->next;
+        // Find middle and keep previous node
+        while (fast != nullptr && fast->next != nullptr) {
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
         }
 
-        int mid = length / 2;
-
-        temp = head;
-
-        for (int i = 0; i < mid - 1; i++) {
-            temp = temp->next;
-        }
-
-        ListNode* delNode = temp->next;
-        temp->next = temp->next->next;
-        delete delNode;
+        // Delete middle node
+        prev->next = slow->next;
 
         return head;
     }
