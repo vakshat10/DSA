@@ -56,6 +56,9 @@ public:
         }
 
         // Skip the dummy node and return the actual answer
-        return dummy->next;
+        ListNode* ans = dummy->next;
+        delete dummy;
+        return ans;
+        
     }
 };
