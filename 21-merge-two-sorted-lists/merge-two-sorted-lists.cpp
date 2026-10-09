@@ -1,43 +1,49 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* dummy = new ListNode(-1);
-        ListNode* tail = dummy;
 
-        while(list1 != nullptr && list2 != nullptr) {
-            if(list1->val <= list2->val) {
-                tail->next = new ListNode(list1->val);
-                list1 = list1->next;
+        // Handle empty lists
+        if(list1 == nullptr) return list2;
+        if(list2 == nullptr) return list1;
+
+        ListNode* temp1 = list1;
+        ListNode* temp2 = list2;
+
+        ListNode* head = nullptr;
+        ListNode* tail = nullptr;
+
+        // Choose the smaller node as the head
+        if(temp1->val <= temp2->val) {
+            head = temp1;
+            tail = head;
+            temp1 = temp1->next;
+        }
+        else {
+            head = temp2;
+            tail = head;
+            temp2 = temp2->next;
+        }
+
+        // Compare nodes and attach the smaller one
+        while(temp1 != nullptr && temp2 != nullptr) {
+            if(temp1->val <= temp2->val) {
+                tail->next = temp1;
+                temp1 = temp1->next;
             }
             else {
-                tail->next = new ListNode(list2->val);
-                list2 = list2->next;
+                tail->next = temp2;
+                temp2 = temp2->next;
             }
+
             tail = tail->next;
         }
 
-        while(list1 != nullptr) {
-            tail->next = new ListNode(list1->val);
-            tail = tail->next;
-            list1 = list1->next;
-        }
+        // Attach the remaining nodes
+        if(temp1 != nullptr)
+            tail->next = temp1;
+        else
+            tail->next = temp2;
 
-        while(list2 != nullptr) {
-            tail->next = new ListNode(list2->val);
-            tail = tail->next;
-            list2 = list2->next;
-        }
-
-        return dummy->next;
+        return head;
     }
 };
