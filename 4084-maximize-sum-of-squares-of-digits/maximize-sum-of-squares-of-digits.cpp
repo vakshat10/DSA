@@ -23,7 +23,7 @@ public:
         // Step 2: write the leftover digit, if there is one
         // '0' + leftover turns the number (for example 8) into the character '8'
         if (leftover > 0) {
-            ans += (char)('0' + leftover);
+            ans += ('0' + leftover);
             used++;
         }
 
