@@ -10,25 +10,19 @@ public:
             mpp[s[right]]++;
             maxFreq = max(maxFreq, mpp[s[right]]);
 
-            int length = right - left + 1; // size of current window
+            int length = right - left + 1;
 
-            while (length - maxFreq > k) { // no of elements to change
-
+            // Replacements needed > k: shrink the window
+            while (length - maxFreq > k) {
                 mpp[s[left]]--;
                 left++;
 
                 length = right - left + 1;
-
-                for(auto it: mpp){
-                    maxFreq = max(maxFreq,it.second);
-                     
-                }
-
-
             }
 
-            maxLen = max(length,maxLen);
+            maxLen = max(length, maxLen);
         }
+
         return maxLen;
     }
 };
