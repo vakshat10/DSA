@@ -1,24 +1,27 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
-        unordered_map<int, int> mpp;  // prefix sum -> frequency
+    int atMost(vector<int>& nums, int k) {
 
-        mpp[0] = 1;  // Empty prefix
-        int sum = 0, count = 0;
+        if (k < 0)
+            return 0;
 
-        for (int i = 0; i < nums.size(); i++) {
-            sum += nums[i];
+        int left = 0, sum = 0, count = 0;
 
-            // Find previous prefix sums that make subarray sum = goal
-            if (mpp.find(sum - goal) != mpp.end()) {
-                count += mpp[sum - goal];
+        for (int right = 0; right < nums.size(); right++) {
+
+            sum += nums[right];
+
+            while (sum > k) {
+                sum = sum - nums[left];
+                left++;
             }
 
-            // Store the current prefix sum
-            mpp[sum]++;
+            count = count + (right - left + 1);
         }
-
         return count;
-        
+    }
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+
+        return(atMost(nums,goal)-atMost(nums,goal-1));
     }
 };
