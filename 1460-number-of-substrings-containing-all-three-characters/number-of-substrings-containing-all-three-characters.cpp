@@ -1,41 +1,32 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-
         int n = s.size();
-
-        int last[3] = {-1,-1,-1};  // 0->a , 1-> b , 2-> c
-
+        int last[3] = {-1, -1, -1}; // Last indices of a, b, c
         int ans = 0;
 
-        for(int i = 0;i<n;i++){
+        for (int i = 0; i < n; i++) {
 
-            if(s[i]== 'a'){
+            // Update the last seen index of the current character
+            if (s[i] == 'a') {
                 last[0] = i;
             }
-
-            else if(s[i]== 'b'){
+            else if (s[i] == 'b') {
                 last[1] = i;
             }
-
-            else{
+            else {
                 last[2] = i;
             }
 
-            if(last[0]>-1 && last[1]>-1 && last[2]>-1 ){  // a,b,c exist in window
+            // Minimum last-seen index determines valid starting positions
+            int mini = min(min(last[0], last[1]), last[2]);
 
-            int mini = min(min(last[0],last[1]),last[2]);
-
-            ans = ans + mini +1;
-
+            // Count valid substrings ending at index i
+            if(mini!= -1){
+            ans += mini + 1;
             }
-
         }
 
         return ans;
-
-
-        
-
     }
 };
