@@ -22,7 +22,6 @@ public:
 
                 if(mpp[nums[left]]==0){
                     count--;
-                    mpp.erase(mpp[nums[left]]);
                 }
 
                 left++;
