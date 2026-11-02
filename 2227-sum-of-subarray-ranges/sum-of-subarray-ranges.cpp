@@ -103,11 +103,11 @@ public:
 
             int left1 = i - pge[i];
             int right1= nge[i] - i;
-            long long maxi = left1 * right1; 
+            long long maxi = 1LL* left1 * right1; 
 
             int left2 = i - pse[i];
             int right2= nse[i] - i;
-            long long mini = left2* right2; 
+            long long mini = 1LL* left2* right2; 
 
             sum += (maxi-mini)*nums[i];
 
