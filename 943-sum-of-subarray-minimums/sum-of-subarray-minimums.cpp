@@ -1,49 +1,69 @@
 class Solution {
 public:
-    int sumSubarrayMins(vector<int>& arr) {
+    // Next Smaller or Equal Element
+    vector<int> NSE(vector<int>& arr) {
         int n = arr.size();
-        const int MOD = 1000000007;
-
-        vector<int> pse(n, -1);   // previous smaller (or equal) index, -1 if none
-        vector<int> nse(n, n);    // next strictly smaller index, n if none
+        vector<int> nse(n, n);
         stack<int> st;
 
-        // previous smaller or equal: walk left to right
-        for (int i = 0; i < n; i++) {
+        for (int i = n - 1; i >= 0; i--) {
+
             while (!st.empty() && arr[st.top()] > arr[i]) {
                 st.pop();
             }
+
             if (!st.empty()) {
-                pse[i] = st.top();
+                nse[i] = st.top();
             }
+
             st.push(i);
         }
 
-        // clear the stack for reuse
-        while (!st.empty()) {
-            st.pop();
-        }
+        return nse;
+    }
 
-        // next strictly smaller: walk right to left
-        for (int i = n - 1; i >= 0; i--) {
+    // Previous Strictly Smaller Element
+    vector<int> PSE(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> pse(n, -1);
+        stack<int> st;
+
+        for (int i = 0; i < n; i++) {
+
             while (!st.empty() && arr[st.top()] >= arr[i]) {
                 st.pop();
             }
-            if (!st.empty()){
-                 nse[i] = st.top();
+
+            if (!st.empty()) {
+                pse[i] = st.top();
             }
+
             st.push(i);
         }
 
-        long long ans = 0;
+        return pse;
+    }
+
+    int sumSubarrayMins(vector<int>& arr) {
+        int n = arr.size();
+        int mod = 1e9 + 7;
+
+        vector<int> nse = NSE(arr);
+        vector<int> pse = PSE(arr);
+
+        long long sum = 0;
+
         for (int i = 0; i < n; i++) {
+
             long long left = i - pse[i];
             long long right = nse[i] - i;
 
-            // arr[i] * (number of subarrays where it is the minimum)
-            ans = (ans + (arr[i] * left   * right))% MOD;
+            // Calculate contribution of current element
+            long long contribution = (1LL * arr[i] * left * right) % mod;
+
+            sum = (sum + contribution) % mod;
         }
 
-        return ans;
+        return sum;
     }
 };
