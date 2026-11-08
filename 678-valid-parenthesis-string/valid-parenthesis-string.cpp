@@ -2,43 +2,37 @@ class Solution {
 public:
     bool checkValidString(string s) {
         int n = s.size();
-        int low = 0,high = 0;
+        int low = 0, high = 0;
 
-        for(int i = 0;i<n;i++){
+        for (int i = 0; i < n; i++) {
 
-            if(s[i] == '('){
+            if (s[i] == '(') {
                 low++;
                 high++;
             }
 
-            else if(s[i] == ')'){
+            else if (s[i] == ')') {
                 low--;
                 high--;
             }
 
-            else{
-                low--;   // * -> ')'
-                high++;  // * -> '('
+            else {
+                low--;   // '*' acts as ')'
+                high++;  // '*' acts as '('
             }
 
-            if(low < 0){
+            // Minimum unmatched '(' cannot be negative
+            if (low < 0) {
                 low = 0;
             }
 
-            if(high<0){            // "*)))"
-                return false;
+            // Even treating '*' as '(' cannot balance the string
+            if (high < 0) {
+                return false;     // "*)))"
             }
         }
 
-        
-
-        if(low == 0){
-            return true;
-        }
-
-        else{ 
-            return false;
-            }
-        
+        // Valid if zero unmatched '(' is possible
+        return low == 0;
     }
 };
